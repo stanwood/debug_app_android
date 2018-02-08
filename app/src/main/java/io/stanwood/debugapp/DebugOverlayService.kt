@@ -71,7 +71,7 @@ class DebugOverlayService : AccessibilityService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             return
         }
-        floatingWidget = (LayoutInflater.from(this).inflate(R.layout.view_toolwindow, null) as OverlayView)
+        floatingWidget = (LayoutInflater.from(this).inflate(R.layout.view_debugoverlay, null) as OverlayView)
                 .apply {
                     findViewById<View>(R.id.btn).setOnTouchListener(OverlayTouchListener(context))
                 }
