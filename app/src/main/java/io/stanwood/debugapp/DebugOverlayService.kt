@@ -51,9 +51,7 @@ class DebugOverlayService : AccessibilityService() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             (applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
-                    .apply {
-                        createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT))
-                    }
+                    .createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT))
         }
         val closeIntent = PendingIntent.getBroadcast(this, System.currentTimeMillis().toInt(),
                 Intent("io.stanwood.action.shutdown"), PendingIntent.FLAG_CANCEL_CURRENT)
