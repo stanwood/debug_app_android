@@ -14,7 +14,6 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.provider.Settings
 import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat.IMPORTANCE_LOW
 import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import org.json.JSONObject
@@ -53,7 +52,7 @@ class DebugOverlayService : AccessibilityService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             (applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
                     .apply {
-                        createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, IMPORTANCE_LOW))
+                        createNotificationChannel(NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT))
                     }
         }
         val closeIntent = PendingIntent.getBroadcast(this, System.currentTimeMillis().toInt(),
@@ -130,13 +129,15 @@ class DebugOverlayService : AccessibilityService() {
                 floatingWidget?.addRow(JSONObject(data)
                         .let {
                             Row(SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT).format(Date(it.getLong("time"))),
-                                    it.getString("eventname"),
-                                    it.getString("itemid"),
-                                    it.getString("name"))
+                                    it.getStringOrDefault("eventname"),
+                                    it.getStringOrDefault("name"),
+                                    it.getStringOrDefault("itemid"))
                         })
             } else if (intent.action == "io.stanwood.action.shutdown") {
                 stopSelf()
             }
         }
     }
+
+    private fun JSONObject.getStringOrDefault(name: String, default: String = "") = if (has(name)) getString(name) else default
 }
