@@ -1,17 +1,32 @@
-<io.stanwood.debugapp.OverlayView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<io.stanwood.debugapp.OverlayView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:theme="@style/AppTheme">
 
-    <ImageButton
-        android:id="@+id/clear"
-        style="@style/Widget.AppCompat.ActionButton"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:src="@drawable/ic_clear_all_black_24dp"/>
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/snapshot"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_baseline_add_a_photo_24px" />
+
+        <ImageButton
+            android:id="@+id/clear"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_clear_all_black_24dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,7 +41,7 @@
             android:background="@drawable/shape_round"
             android:padding="4dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/me"/>
+            android:src="@drawable/me" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcv"
@@ -34,6 +49,6 @@
             android:layout_height="150dp"
             android:background="@drawable/shape_overlay_background"
             android:padding="1dp"
-            android:visibility="visible"/>
+            android:visibility="visible" />
     </LinearLayout>
 </io.stanwood.debugapp.OverlayView>
