@@ -1,6 +1,7 @@
 package io.stanwood.debugapp
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
@@ -27,7 +28,16 @@ class OverlayView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             setOnClickListener { rcv?.visibility = if (rcv?.visibility == View.VISIBLE) View.GONE else View.VISIBLE }
         }
         findViewById<View>(R.id.clear).apply {
-            setOnClickListener { adapter.clear() }
+            setOnClickListener {
+                adapter.clear()
+            }
+        }
+        findViewById<View>(R.id.snapshot).apply {
+            setOnClickListener {
+                val intent = Intent()
+                intent.action = "io.stanwood.uitesting.DUMP_WINDOW_HIERARCHY_INTENT"
+                context.sendBroadcast(intent)
+            }
         }
 
     }
