@@ -4,5 +4,11 @@
     <color name="colorPrimaryDark">#b71c1c</color>
     <color name="colorAccent">#4dd0e1</color>
     <color name="black">#000</color>
+    <color name="lightGray">#b7b7b7</color>
     <color name="white">#fff</color>
+    <color name="transparent">#00000000</color>
+    <color name="blackTransparent">#96000000</color>
+    <color name="whiteTransparent">#f0ffffff</color>
+    <color name="yellow">#f9f27d</color>
+    <color name="darkyellow">#fff100</color>
 </resources>
