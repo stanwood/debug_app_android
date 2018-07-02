@@ -7,7 +7,7 @@ import android.graphics.Rect
 import javax.inject.Inject
 
 
-class SettingsService @Inject constructor (private val context:Application,private val resources: Resources){
+class SettingsService @Inject constructor(private val context: Application, private val resources: Resources) {
 
     fun saveViewSize(x: Int, y: Int, width: Int, height: Int) {
         context.getSharedPreferences("data", Context.MODE_PRIVATE)
@@ -24,8 +24,8 @@ class SettingsService @Inject constructor (private val context:Application,priva
                     Rect(
                             left,
                             top,
-                    left + it.getInt("w", resources.getDimension(R.dimen.overlay_expanded_min_size).toInt()),
-                    top + it.getInt("h", resources.getDimension(R.dimen.overlay_expanded_min_size).toInt()))
+                            left + it.getInt("w", resources.getDimension(R.dimen.overlay_expanded_min_size).toInt()),
+                            top + it.getInt("h", resources.getDimension(R.dimen.overlay_expanded_min_size).toInt()))
                 }
     }
 }

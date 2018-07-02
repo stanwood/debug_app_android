@@ -1,7 +1,6 @@
 package io.stanwood.debugapp.features.analytics
 
 import android.app.Application
-import android.content.Intent
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,6 +11,7 @@ import io.stanwood.debugapp.BR
 import io.stanwood.debugapp.R
 import io.stanwood.debugapp.databinding.ItemAnalyticsEventBinding
 import io.stanwood.debugapp.databinding.ItemAnalyticsKeyValueBinding
+import io.stanwood.debugapp.databinding.ItemAnalyticsStacktraceBinding
 import io.stanwood.debugapp.databinding.ViewAnalyticsTrackerBinding
 import io.stanwood.debugapp.features.DebugPlugin
 import io.stanwood.framework.databinding.recyclerview.DataBindingViewHolder
@@ -19,8 +19,9 @@ import io.stanwood.framework.databinding.recyclerview.ObservableListBindingAdapt
 import javax.inject.Inject
 
 class AnalyticsPlugin @Inject constructor(val context: Application, private val analyticsDataProvider: AnalyticsDataProvider) : DebugPlugin {
-    override fun onToolbarIconClicked(position: Int) {
 
+    override fun onToolbarIconClicked(position: Int) {
+        binding?.vm?.onToolbarAction(position)
     }
 
     override val pluginIcons: Array<Int>?
@@ -33,17 +34,17 @@ class AnalyticsPlugin @Inject constructor(val context: Application, private val 
             this@AnalyticsPlugin.binding = it
             it.rcvEvents.apply {
                 layoutManager = LinearLayoutManager(context)
-                        .apply { stackFromEnd = true   }
+                        .apply { stackFromEnd = true }
                 adapter = EventsAdapter(LayoutInflater.from(context))
                         .apply {
                             registerAdapterDataObserver(scrollToBottomDataObserver)
                         }
-                addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             }
             it.rcvDetails.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = DetailsAdapter(LayoutInflater.from(context))
-                addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
+                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             }
             it.vm = AnalyticsPluginViewModel(analyticsDataProvider)
             it.root
@@ -61,6 +62,15 @@ class AnalyticsPlugin @Inject constructor(val context: Application, private val 
         }
     }
 
+    override fun destroy() {
+        binding?.apply {
+            rcvEvents.adapter?.unregisterAdapterDataObserver(scrollToBottomDataObserver)
+            vm?.destroy()
+            unbind()
+        }
+    }
+
+
     private class EventsAdapter(inflater: LayoutInflater) : ObservableListBindingAdapter<AnalyticsDataViewModel>(inflater) {
 
         override fun onCreateViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup, viewType: Int) =
@@ -71,26 +81,17 @@ class AnalyticsPlugin @Inject constructor(val context: Application, private val 
         }
     }
 
-    private class DetailsAdapter(inflater: LayoutInflater) : ObservableListBindingAdapter<KeyValueViewModel>(inflater) {
+    private class DetailsAdapter(inflater: LayoutInflater) : ObservableListBindingAdapter<HasViewType>(inflater) {
 
+        override fun getItemViewType(position: Int, item: HasViewType?) = item?.viewType ?: 0
         override fun onCreateViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup, viewType: Int) =
-                DataBindingViewHolder(ItemAnalyticsKeyValueBinding.inflate(inflater, viewGroup, false))
+                when (viewType) {
+                    1 -> DataBindingViewHolder(ItemAnalyticsStacktraceBinding.inflate(inflater, viewGroup, false))
+                    else -> DataBindingViewHolder(ItemAnalyticsKeyValueBinding.inflate(inflater, viewGroup, false))
+                }
 
-        override fun bindItem(holder: DataBindingViewHolder<*>, position: Int, item: KeyValueViewModel, payloads: MutableList<Any>?) {
+        override fun bindItem(holder: DataBindingViewHolder<*>, position: Int, item: HasViewType, payloads: MutableList<Any>?) {
             holder.binding.setVariable(BR.vm, item)
         }
-    }
-
-    fun onNewData(intent: Intent) {
-
-        val data = intent.getStringExtra("data")
-        val appId = intent.getStringExtra("appid")
-        /*view.addRow(JSONObject(data)
-                .let {
-                    AnalyticsDataViewModel(dateFormat.format(Date(it.getLong("time"))),
-                            it.getStringOrDefault("eventname"),
-                            it.getStringOrDefault("name"),
-                            it.getStringOrDefault("itemid"))
-                })*/
     }
 }

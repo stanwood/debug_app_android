@@ -39,7 +39,7 @@ class OverlayView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             }
             floatingView.visibility = if (value) View.GONE else View.VISIBLE
             expandedLayout.visibility = if (value) View.VISIBLE else View.GONE
-            isActivated=isExpanded
+            isActivated = isExpanded
         }
 
     private var isResizeEnabled = false

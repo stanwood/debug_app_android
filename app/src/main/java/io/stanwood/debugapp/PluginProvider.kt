@@ -7,6 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 class PluginProvider @Inject constructor(private val analyticsPlugin: AnalyticsPlugin,
-                                         private val webRequestPlugin: WebRequestPlugin){
-    val plugins= mapOf(Pair(0,analyticsPlugin),Pair(1,webRequestPlugin))
+                                         private val webRequestPlugin: WebRequestPlugin) {
+    val plugins = mapOf(Pair(0, analyticsPlugin), Pair(1, webRequestPlugin))
 }

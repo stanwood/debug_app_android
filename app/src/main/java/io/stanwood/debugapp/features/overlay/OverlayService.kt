@@ -70,7 +70,7 @@ class OverlayService : AccessibilityService() {
             return
         }
         overlay.apply {
-            windowManager.addView(contentView,
+            windowManager.addView(create(),
                     settingsService.getViewSize()
                             .let {
                                 WindowManager.LayoutParams(
@@ -90,8 +90,8 @@ class OverlayService : AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiver)
-        overlay.apply {
-            windowManager.removeView(contentView)
+        overlay.rootView?.apply {
+            windowManager.removeView(this)
         }
     }
 

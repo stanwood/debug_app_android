@@ -14,38 +14,43 @@ import io.stanwood.debugapp.databinding.ViewOverlayBinding
 import io.stanwood.debugapp.features.DebugPlugin
 import io.stanwood.framework.databinding.recyclerview.DataBindingViewHolder
 import io.stanwood.framework.databinding.recyclerview.ObservableListBindingAdapter
-import org.json.JSONObject
 import javax.inject.Inject
 
 class Overlay @Inject constructor(private val context: Application,
                                   private val settingsService: SettingsService,
                                   private val viewModel: OverlayViewModel,
                                   private val pluginProvider: PluginProvider) {
-    val contentView: View
-        get() = binding.root
+
 
     private val iconClickListener: ((Int) -> Unit) = {
         activePlugin?.onToolbarIconClicked(it)
     }
 
-    private val binding by lazy {
-        ViewOverlayBinding.inflate(LayoutInflater.from(context))
-                .apply {
-                    viewModel.addOnPropertyChangedCallback(propertyChangedCallback)
-                    overlay.iconClickListener = iconClickListener
-                    overlay.viewChangedCallback = { x, y, w, h -> settingsService.saveViewSize(x, y, w, h) }
-                    rcvDrawer.layoutManager = LinearLayoutManager(context)
-                    rcvDrawer.adapter = Adapter(LayoutInflater.from(context))
-                    vm = viewModel
-                    executePendingBindings()
-                }
-    }
+    private var binding: ViewOverlayBinding? = null
+
+    val rootView = binding?.root
+
+    fun create(): View =
+            ViewOverlayBinding.inflate(LayoutInflater.from(context))
+                    .let {
+                        binding = it
+                        viewModel.addOnPropertyChangedCallback(propertyChangedCallback)
+                        it.overlay.iconClickListener = iconClickListener
+                        it.overlay.viewChangedCallback = { x, y, w, h -> settingsService.saveViewSize(x, y, w, h) }
+                        it.rcvDrawer.layoutManager = LinearLayoutManager(context)
+                        it.rcvDrawer.adapter = Adapter(LayoutInflater.from(context))
+                        it.vm = viewModel
+                        activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]
+                        it.executePendingBindings()
+                        it.root
+                    }
 
 
     private val propertyChangedCallback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             if (propertyId == BR.selectedItem) {
                 activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]
+                binding?.drawer?.closeDrawers()
             }
         }
     }
@@ -53,18 +58,15 @@ class Overlay @Inject constructor(private val context: Application,
     private var activePlugin: DebugPlugin? = null
         set(value) {
             if (field != value) {
+                field?.destroy()
                 field = value
-                binding.container.removeAllViews()
+                binding?.container?.removeAllViews()
                 value?.apply {
-                    binding.container.addView(create())
-                    binding.overlay.setToolbarIcons(pluginIcons)
+                    binding?.container?.addView(create())
+                    binding?.overlay?.setToolbarIcons(pluginIcons)
                 }
             }
         }
-
-
-    private fun JSONObject.getStringOrDefault(name: String, default: String = "") = if (has(name)) getString(name) else default
-
 
     private class Adapter(inflater: LayoutInflater) : ObservableListBindingAdapter<DrawerItem>(inflater) {
 
@@ -75,5 +77,6 @@ class Overlay @Inject constructor(private val context: Application,
             holder.binding.setVariable(BR.vm, item)
         }
     }
+
 }
 

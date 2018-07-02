@@ -5,7 +5,11 @@ import android.view.View
 import io.stanwood.debugapp.features.DebugPlugin
 import javax.inject.Inject
 
-class WebRequestPlugin @Inject constructor(val context:Application) : DebugPlugin {
+class WebRequestPlugin @Inject constructor(val context: Application) : DebugPlugin {
+    override fun destroy() {
+
+    }
+
     override fun create(): View {
         return View(context)
     }
@@ -14,6 +18,6 @@ class WebRequestPlugin @Inject constructor(val context:Application) : DebugPlugi
 
     }
 
-    override val pluginIcons : Array<Int>?=null
+    override val pluginIcons: Array<Int>? = null
 
 }
