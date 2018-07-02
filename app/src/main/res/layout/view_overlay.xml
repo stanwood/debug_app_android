@@ -21,6 +21,7 @@
             android:layout_height="34dp"
             android:layout_marginEnd="4dp"
             android:background="@drawable/shape_round"
+            android:elevation="2dp"
             android:padding="4dp"
             android:scaleType="fitCenter"
             android:src="@drawable/me" />
@@ -36,9 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:orientation="horizontal"
                 android:background="@color/white"
                 android:elevation="1dp"
+                android:orientation="horizontal"
                 android:padding="4dp">
 
                 <ImageView
@@ -63,7 +64,7 @@
                     android:layout_width="@dimen/toolbar_button"
                     android:layout_height="@dimen/toolbar_button"
                     android:layout_marginEnd="@dimen/padding"
-                    android:src="@drawable/ic_crop_free_black_24dp" />
+                    android:src="@drawable/ic_aspect_ratio_black_24dp" />
             </LinearLayout>
 
 

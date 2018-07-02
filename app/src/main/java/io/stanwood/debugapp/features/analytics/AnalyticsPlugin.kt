@@ -8,11 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.stanwood.debugapp.BR
-import io.stanwood.debugapp.R
-import io.stanwood.debugapp.databinding.ItemAnalyticsEventBinding
-import io.stanwood.debugapp.databinding.ItemAnalyticsKeyValueBinding
-import io.stanwood.debugapp.databinding.ItemAnalyticsStacktraceBinding
-import io.stanwood.debugapp.databinding.ViewAnalyticsTrackerBinding
+import io.stanwood.debugapp.databinding.*
 import io.stanwood.debugapp.features.DebugPlugin
 import io.stanwood.framework.databinding.recyclerview.DataBindingViewHolder
 import io.stanwood.framework.databinding.recyclerview.ObservableListBindingAdapter
@@ -20,14 +16,14 @@ import javax.inject.Inject
 
 class AnalyticsPlugin @Inject constructor(val context: Application, private val analyticsDataProvider: AnalyticsDataProvider) : DebugPlugin {
 
-    override fun onToolbarIconClicked(position: Int) {
-        binding?.vm?.onToolbarAction(position)
-    }
-
-    override val pluginIcons: Array<Int>?
-        get() = arrayOf(R.drawable.ic_clear_all_black_24dp)
-
     var binding: ViewAnalyticsTrackerBinding? = null
+
+    override fun createToolbar(): View? {
+        return ViewDefaultPluginToolbarBinding.inflate(LayoutInflater.from(context)).let {
+            it.clearClickListener = View.OnClickListener { binding?.vm?.clear() }
+            it.root
+        }
+    }
 
     override fun create(): View {
         return ViewAnalyticsTrackerBinding.inflate(LayoutInflater.from(context)).let {

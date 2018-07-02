@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="clearClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/toolbar_button"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/resize"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="@dimen/toolbar_button"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/padding"
+            android:onClick="@{clearClickListener}"
+            android:src="@drawable/ic_clear_all_black_24dp" />
+    </LinearLayout>
+</layout>

@@ -1,4 +1,4 @@
-package io.stanwood.debugapp
+package io.stanwood.debugapp.databinding
 
 abstract class ItemSwapHelper<T, T2> {
     abstract fun mapAll(newItems: List<T2>): List<T>

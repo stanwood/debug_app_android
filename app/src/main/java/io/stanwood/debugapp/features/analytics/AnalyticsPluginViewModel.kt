@@ -4,8 +4,8 @@ import android.databinding.ObservableArrayList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
-import io.stanwood.debugapp.ItemSwapHelper
-import io.stanwood.debugapp.ObservableArrayListEx
+import io.stanwood.debugapp.databinding.ItemSwapHelper
+import io.stanwood.debugapp.databinding.ObservableArrayListEx
 import javax.inject.Inject
 
 class AnalyticsPluginViewModel @Inject constructor(private val analyticsDataProvider: AnalyticsDataProvider) {
@@ -58,7 +58,7 @@ class AnalyticsPluginViewModel @Inject constructor(private val analyticsDataProv
                 }, onError = { it.printStackTrace() }))
     }
 
-    fun onToolbarAction(position: Int) {
+    fun clear() {
         selectedEvent = null
         detailItems.clear()
         analyticsDataProvider.clear()

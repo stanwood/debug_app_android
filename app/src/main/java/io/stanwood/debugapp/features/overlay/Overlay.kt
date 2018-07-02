@@ -21,11 +21,6 @@ class Overlay @Inject constructor(private val context: Application,
                                   private val viewModel: OverlayViewModel,
                                   private val pluginProvider: PluginProvider) {
 
-
-    private val iconClickListener: ((Int) -> Unit) = {
-        activePlugin?.onToolbarIconClicked(it)
-    }
-
     private var binding: ViewOverlayBinding? = null
 
     val rootView = binding?.root
@@ -35,12 +30,11 @@ class Overlay @Inject constructor(private val context: Application,
                     .let {
                         binding = it
                         viewModel.addOnPropertyChangedCallback(propertyChangedCallback)
-                        it.overlay.iconClickListener = iconClickListener
                         it.overlay.viewChangedCallback = { x, y, w, h -> settingsService.saveViewSize(x, y, w, h) }
                         it.rcvDrawer.layoutManager = LinearLayoutManager(context)
                         it.rcvDrawer.adapter = Adapter(LayoutInflater.from(context))
                         it.vm = viewModel
-                        activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]
+                        activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]?.plugin
                         it.executePendingBindings()
                         it.root
                     }
@@ -49,7 +43,7 @@ class Overlay @Inject constructor(private val context: Application,
     private val propertyChangedCallback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             if (propertyId == BR.selectedItem) {
-                activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]
+                activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]?.plugin
                 binding?.drawer?.closeDrawers()
             }
         }
@@ -59,12 +53,13 @@ class Overlay @Inject constructor(private val context: Application,
         set(value) {
             if (field != value) {
                 field?.destroy()
-                field = value
                 binding?.container?.removeAllViews()
+                binding?.containerIcons?.removeAllViews()
                 value?.apply {
                     binding?.container?.addView(create())
-                    binding?.overlay?.setToolbarIcons(pluginIcons)
+                    binding?.containerIcons?.addView(createToolbar())
                 }
+                field = value
             }
         }
 

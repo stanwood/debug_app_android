@@ -1,4 +1,4 @@
-package io.stanwood.debugapp
+package io.stanwood.debugapp.databinding
 
 import android.databinding.ListChangeRegistry
 import android.databinding.ObservableList

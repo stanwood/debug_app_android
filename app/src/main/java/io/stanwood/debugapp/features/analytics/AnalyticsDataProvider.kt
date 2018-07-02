@@ -10,35 +10,9 @@ import javax.inject.Inject
 
 class AnalyticsDataProvider @Inject constructor(val dataApi: DataApi) {
 
-    private val events = mutableListOf<AnalyticsData>()
-    private val analyticsData = BehaviorSubject.createDefault(events)
-
-    val analyticsDataStream: Observable<MutableList<AnalyticsData>> =
-            analyticsData.sample(200, TimeUnit.MILLISECONDS)
-
-
-    private fun onNewData(data: DebugData) {
-        data.intent.getStringExtra("data")?.split("|")
-                ?.let {
-                    when (it.get(1)) {
-                        "exception" -> AnalyticsData(it.get(0).toLong(), "exception", stacktrace = if (it.size > 2) it[2] else "N/A")
-                        else -> AnalyticsData(it.get(0).toLong(),
-                                it.get(1),
-                                if (it.size > 2) {
-                                    val properties = mutableListOf<Pair<String, String>>()
-                                    for (i in 2..(it.size - 2 / 2) step 2) {
-                                        properties.add(Pair(it.get(i), it.get(i + 1)))
-                                    }
-                                    properties
-                                } else null)
-                    }
-                }
-                ?.apply {
-                    events.add(this)
-                    analyticsData.onNext(events)
-                }
-    }
-
+    private val db = BehaviorSubject.createDefault(mutableListOf<AnalyticsData>())
+    private val analyticsData = BehaviorSubject.createDefault(mutableListOf<AnalyticsData>())
+    val analyticsDataStream: Observable<MutableList<AnalyticsData>> = analyticsData
     private var disposable: Disposable? = null
 
     init {
@@ -46,20 +20,41 @@ class AnalyticsDataProvider @Inject constructor(val dataApi: DataApi) {
     }
 
     fun clear() {
-        disposable?.dispose()
-        events.clear()
-        analyticsData.onNext(events)
-        subscribe()
+        db.onNext(mutableListOf())
     }
 
     private fun subscribe() {
         disposable?.dispose()
-        disposable = dataApi.debugDataStream
-                .filter {
-                    it.source == "debugtracker"
-                }
+        disposable = db.switchMap { list ->
+            dataApi.debugDataStream
+                    .filter {
+                        it.source == "debugtracker" && !it.intent.getStringExtra("data").isNullOrEmpty()
+                    }
+                    .map {
+                        it.intent.getStringExtra("data").split("|")
+                                .let {
+                                    when (it.get(1)) {
+                                        "exception" -> AnalyticsData(it.get(0).toLong(), "exception", stacktrace = if (it.size > 2) it[2] else "N/A")
+                                        else -> AnalyticsData(it.get(0).toLong(),
+                                                it.get(1),
+                                                if (it.size > 2) {
+                                                    val properties = mutableListOf<Pair<String, String>>()
+                                                    for (i in 2..(it.size - 2 / 2) step 2) {
+                                                        properties.add(Pair(it.get(i), it.get(i + 1)))
+                                                    }
+                                                    properties
+                                                } else null)
+                                    }
+                                }
+                    }
+                    .buffer(200, TimeUnit.MILLISECONDS, 5)
+                    .map {
+                        list.addAll(it)
+                        list
+                    }
+        }
                 .subscribeBy(onNext = {
-                    onNewData(it)
+                    analyticsData.onNext(it)
                 }, onError = { it.printStackTrace() })
     }
 }

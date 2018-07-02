@@ -6,11 +6,9 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewConfiguration
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import io.stanwood.debugapp.R
 import kotlinx.android.synthetic.main.view_overlay.view.*
 
@@ -53,12 +51,6 @@ class OverlayView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         resources.getDimension(R.dimen.overlay_expanded_min_size).toInt()
     }
 
-    var iconClickListener: ((Int) -> Unit)? = null
-
-    private val pluginIconClickListener = OnClickListener {
-        iconClickListener?.invoke(container.indexOfChild(it))
-    }
-
     override fun onFinishInflate() {
         super.onFinishInflate()
         floatingView.setOnClickListener { isExpanded = true }
@@ -75,21 +67,6 @@ class OverlayView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         if (isInEditMode) {
             isResizeEnabled = false
             isExpanded = true
-        }
-    }
-
-    fun setToolbarIcons(icons: Array<Int>?) {
-        val size = context.resources.getDimensionPixelSize(R.dimen.toolbar_button)
-        val margin = context.resources.getDimension(R.dimen.padding).toInt()
-        container_icons.removeAllViews()
-        icons?.forEach {
-            this@OverlayView.container_icons.addView(
-                    ImageButton(context, null, R.style.Widget_AppCompat_Light_ActionButton)
-                            .apply {
-                                layoutParams = MarginLayoutParams(size, size).apply { marginEnd = margin }
-                                setImageResource(it)
-                                setOnClickListener(pluginIconClickListener)
-                            })
         }
     }
 
