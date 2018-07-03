@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="io.stanwood.debugapp.features.SectionViewModel" />
+    </data>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingStart="4dp"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding"
+        android:text="@{vm.title}"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/small" />
+
+
+</layout>

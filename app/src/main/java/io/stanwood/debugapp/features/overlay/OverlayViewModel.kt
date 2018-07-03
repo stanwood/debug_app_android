@@ -3,7 +3,7 @@ package io.stanwood.debugapp.features.overlay
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import io.stanwood.debugapp.BR
-import io.stanwood.debugapp.PluginProvider
+import io.stanwood.debugapp.features.PluginProvider
 import javax.inject.Inject
 
 class OverlayViewModel @Inject constructor(val pluginProvider: PluginProvider) : BaseObservable() {
@@ -14,9 +14,17 @@ class OverlayViewModel @Inject constructor(val pluginProvider: PluginProvider) :
         DrawerItem(it.value.name, it.value.iconResId, it.value.id, drawerItemClickListener)
     }
     @Bindable
-    var selectedItem: DrawerItem? = items[0]
+    var selectedItem: DrawerItem? = null
         set(value) {
-            field = value
-            notifyPropertyChanged(BR.selectedItem)
+            if (field != value) {
+                field?.selected = false
+                field = value
+                field?.selected = true
+                notifyPropertyChanged(BR.selectedItem)
+            }
         }
+
+    init {
+        selectedItem = items[0]
+    }
 }

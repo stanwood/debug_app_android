@@ -11,7 +11,7 @@ object RecyclerViewBindings {
     @JvmStatic
     fun setAdapterItems(recyclerView: RecyclerView, items: List<*>?, adapter: RecyclerView.Adapter<*>?) {
         if (recyclerView.adapter == null) {
-            if (adapter == null || items?.isEmpty() ?: true) {
+            if (adapter == null || items?.isEmpty() != false) {
                 return
             }
             recyclerView.adapter = adapter

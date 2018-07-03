@@ -19,14 +19,14 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import dagger.android.AndroidInjection
 import io.stanwood.debugapp.R
-import io.stanwood.debugapp.SettingsService
+import io.stanwood.debugapp.services.SettingsRepository
 import javax.inject.Inject
 
 
 class OverlayService : AccessibilityService() {
 
     @Inject
-    lateinit var settingsService: SettingsService
+    lateinit var settingsRepository: SettingsRepository
     @Inject
     lateinit var overlay: Overlay
 
@@ -71,7 +71,7 @@ class OverlayService : AccessibilityService() {
         }
         overlay.apply {
             windowManager.addView(create(),
-                    settingsService.getViewSize()
+                    settingsRepository.getViewSize()
                             .let {
                                 WindowManager.LayoutParams(
                                         it.width(),

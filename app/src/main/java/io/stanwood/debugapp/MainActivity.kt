@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             setContentView(R.layout.activity_main)
             findViewById<Button>(R.id.floatingView).apply {
-                setText("Request permission")
+                text = "Request permission"
                 setOnClickListener(View.OnClickListener { requestOverlayPermission() })
             }
         }

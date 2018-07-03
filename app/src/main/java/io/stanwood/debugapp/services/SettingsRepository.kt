@@ -1,13 +1,14 @@
-package io.stanwood.debugapp
+package io.stanwood.debugapp.services
 
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
+import io.stanwood.debugapp.R
 import javax.inject.Inject
 
 
-class SettingsService @Inject constructor(private val context: Application, private val resources: Resources) {
+class SettingsRepository @Inject constructor(private val context: Application, private val resources: Resources) {
 
     fun saveViewSize(x: Int, y: Int, width: Int, height: Int) {
         context.getSharedPreferences("data", Context.MODE_PRIVATE)

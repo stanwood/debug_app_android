@@ -13,12 +13,15 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:onClick="@{vm::onClicked}"
+        android:background="@drawable/selector_drawer_item"
+        app:selected="@{vm.selected}"
         android:padding="@dimen/padding">
 
         <ImageView
             android:id="@+id/icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:tint="@color/selector_gray_accent"
             app:imageResource="@{vm.iconResId}" />
 
         <TextView
@@ -27,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding"
             android:text="@{vm.title}"
+            android:textColor="@color/selector_black_accent"
             android:textSize="@dimen/title" />
 
     </LinearLayout>

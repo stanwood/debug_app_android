@@ -5,32 +5,31 @@
 
         <variable
             name="vm"
-            type="io.stanwood.debugapp.features.analytics.KeyValueViewModel" />
+            type="io.stanwood.debugapp.features.KeyValueViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="?android:attr/listDivider"
-        android:paddingEnd="4dp"
-        android:paddingStart="4dp"
-        android:showDividers="middle">
+        android:paddingStart="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingStart="4dp"
+            android:textColor="@color/black"
             android:text="@{vm.key}"
             android:textSize="@dimen/small" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:paddingStart="4dp"
+            android:layout_marginTop="2dp"
             android:textSize="@dimen/small"
             android:text="@{vm.value}"/>
-
     </LinearLayout>
 </layout>

@@ -1,6 +1,6 @@
-package io.stanwood.debugapp
+package io.stanwood.debugapp.features
 
-import io.stanwood.debugapp.features.DebugPlugin
+import io.stanwood.debugapp.R
 import io.stanwood.debugapp.features.analytics.AnalyticsPlugin
 import io.stanwood.debugapp.features.webrequest.WebRequestPlugin
 import javax.inject.Inject

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import io.stanwood.debugapp.BR
 import io.stanwood.debugapp.databinding.*
 import io.stanwood.debugapp.features.DebugPlugin
+import io.stanwood.debugapp.features.HasViewType
 import io.stanwood.framework.databinding.recyclerview.DataBindingViewHolder
 import io.stanwood.framework.databinding.recyclerview.ObservableListBindingAdapter
 import javax.inject.Inject
@@ -40,7 +41,7 @@ class AnalyticsPlugin @Inject constructor(val context: Application, private val 
             it.rcvDetails.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = DetailsAdapter(LayoutInflater.from(context))
-                addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+
             }
             it.vm = AnalyticsPluginViewModel(analyticsDataProvider)
             it.root
@@ -67,23 +68,24 @@ class AnalyticsPlugin @Inject constructor(val context: Application, private val 
     }
 
 
-    private class EventsAdapter(inflater: LayoutInflater) : ObservableListBindingAdapter<AnalyticsDataViewModel>(inflater) {
+    private class EventsAdapter(inflater: LayoutInflater) : ObservableListBindingAdapter<AnalyticsDataItemViewModel>(inflater) {
 
         override fun onCreateViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup, viewType: Int) =
                 DataBindingViewHolder(ItemAnalyticsEventBinding.inflate(inflater, viewGroup, false))
 
-        override fun bindItem(holder: DataBindingViewHolder<*>, position: Int, item: AnalyticsDataViewModel, payloads: MutableList<Any>?) {
+        override fun bindItem(holder: DataBindingViewHolder<*>, position: Int, item: AnalyticsDataItemViewModel, payloads: MutableList<Any>?) {
             holder.binding.setVariable(BR.vm, item)
         }
     }
 
     private class DetailsAdapter(inflater: LayoutInflater) : ObservableListBindingAdapter<HasViewType>(inflater) {
 
+
         override fun getItemViewType(position: Int, item: HasViewType?) = item?.viewType ?: 0
         override fun onCreateViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup, viewType: Int) =
                 when (viewType) {
-                    1 -> DataBindingViewHolder(ItemAnalyticsStacktraceBinding.inflate(inflater, viewGroup, false))
-                    else -> DataBindingViewHolder(ItemAnalyticsKeyValueBinding.inflate(inflater, viewGroup, false))
+                    StacktraceViewModel.VIEWTYPE -> DataBindingViewHolder(ItemAnalyticsStacktraceBinding.inflate(inflater, viewGroup, false))
+                    else -> DataBindingViewHolder(ItemKeyValueBinding.inflate(inflater, viewGroup, false))
                 }
 
         override fun bindItem(holder: DataBindingViewHolder<*>, position: Int, item: HasViewType, payloads: MutableList<Any>?) {
