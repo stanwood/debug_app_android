@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="io.stanwood.debugapp.features.webrequest.WebRequestPluginViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:items="@{vm.items}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_details"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:visibility="@{vm.selectedItem!=null}"
+            app:items="@{vm.detailItems}" />
+    </FrameLayout>
+
+</layout>

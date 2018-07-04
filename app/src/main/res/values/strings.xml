@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Debug app</string>
+    <string name="webrequest_detail_title_general">General</string>
+    <string name="webrequest_detail_url">Url</string>
+    <string name="webrequest_detail_method">Method</string>
+    <string name="webrequest_detail_protocol">Protocol</string>
+    <string name="webrequest_detail_duration">Duration (ms)</string>
+    <string name="webrequest_detail_error">Error message</string>
+    <string name="webrequest_detail_title_request">Request</string>
+    <string name="webrequest_detail_date">Date</string>
+    <string name="webrequest_detail_content_type">Content type</string>
+    <string name="webrequest_detail_content_length">Content length</string>
+    <string name="webrequest_detail_headers">Headers</string>
+    <string name="webrequest_detail_title_response">Response</string>
+    <string name="webrequest_detail_code">Code</string>
+    <string name="webrequest_detail_message">Message</string>
 </resources>
