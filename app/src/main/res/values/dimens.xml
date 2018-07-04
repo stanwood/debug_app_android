@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small">12sp</dimen>
+    <dimen name="title">14sp</dimen>
+    <dimen name="padding">14dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="toolbar_button">20dp</dimen>
+    <dimen name="overlay_expanded_min_size">100dp</dimen>
+</resources>

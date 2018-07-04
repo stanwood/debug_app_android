@@ -1,0 +1,132 @@
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="io.stanwood.debugapp.features.overlay.OverlayViewModel" />
+    </data>
+
+    <io.stanwood.debugapp.features.overlay.OverlayView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_background"
+        android:elevation="4dp"
+        android:theme="@style/AppTheme">
+
+        <ImageButton
+            android:id="@+id/floatingView"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/shape_round"
+            android:elevation="2dp"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/me" />
+
+
+        <LinearLayout
+            android:id="@+id/expandedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@color/white"
+                android:elevation="1dp"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <ImageView
+                    android:id="@+id/btnHome"
+                    android:layout_width="@dimen/toolbar_button"
+                    android:layout_height="@dimen/toolbar_button"
+                    android:layout_gravity="start|center_vertical"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/me" />
+
+                <LinearLayout
+                    android:id="@+id/container_icons"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/toolbar_button"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:orientation="horizontal" />
+
+                <ImageButton
+                    android:id="@+id/resize"
+                    style="@style/Widget.AppCompat.ActionButton"
+                    android:layout_width="@dimen/toolbar_button"
+                    android:layout_height="@dimen/toolbar_button"
+                    android:layout_marginEnd="@dimen/padding"
+                    android:src="@drawable/ic_aspect_ratio_black_24dp" />
+            </LinearLayout>
+
+
+            <android.support.v4.widget.DrawerLayout
+                android:id="@+id/drawer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcv_drawer"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:background="@color/white"
+                    app:items="@{vm.items}" />
+            </android.support.v4.widget.DrawerLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/resizeOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/resizeLeft"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/shape_overlay_resize_anchor"
+                android:padding="@dimen/padding" />
+
+            <View
+                android:id="@+id/resizeTop"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top|center_horizontal"
+                android:background="@drawable/shape_overlay_resize_anchor" />
+
+
+            <View
+                android:id="@+id/resizeRight"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="end|center_vertical"
+                android:background="@drawable/shape_overlay_resize_anchor" />
+
+            <View
+                android:id="@+id/resizeBottom"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:background="@drawable/shape_overlay_resize_anchor" />
+        </FrameLayout>
+
+
+    </io.stanwood.debugapp.features.overlay.OverlayView>
+</layout>
