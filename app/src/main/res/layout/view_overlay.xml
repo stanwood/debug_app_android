@@ -17,12 +17,12 @@
 
         <ImageButton
             android:id="@+id/floatingView"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="4dp"
             android:background="@drawable/shape_round"
             android:elevation="2dp"
-            android:padding="4dp"
+            android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/me" />
 
@@ -98,31 +98,31 @@
 
             <View
                 android:id="@+id/resizeLeft"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/resize_anchor_size"
+                android:layout_height="@dimen/resize_anchor_size"
                 android:layout_gravity="start|center_vertical"
                 android:background="@drawable/shape_overlay_resize_anchor"
                 android:padding="@dimen/padding" />
 
             <View
                 android:id="@+id/resizeTop"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/resize_anchor_size"
+                android:layout_height="@dimen/resize_anchor_size"
                 android:layout_gravity="top|center_horizontal"
                 android:background="@drawable/shape_overlay_resize_anchor" />
 
 
             <View
                 android:id="@+id/resizeRight"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/resize_anchor_size"
+                android:layout_height="@dimen/resize_anchor_size"
                 android:layout_gravity="end|center_vertical"
                 android:background="@drawable/shape_overlay_resize_anchor" />
 
             <View
                 android:id="@+id/resizeBottom"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/resize_anchor_size"
+                android:layout_height="@dimen/resize_anchor_size"
                 android:layout_gravity="bottom|center_horizontal"
                 android:background="@drawable/shape_overlay_resize_anchor" />
         </FrameLayout>

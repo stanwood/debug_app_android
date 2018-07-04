@@ -13,6 +13,7 @@ class OverlayViewModel @Inject constructor(val pluginProvider: PluginProvider) :
     val items = pluginProvider.plugins.mapNotNull {
         DrawerItem(it.value.name, it.value.iconResId, it.value.id, drawerItemClickListener)
     }
+
     @Bindable
     var selectedItem: DrawerItem? = null
         set(value) {
@@ -23,8 +24,4 @@ class OverlayViewModel @Inject constructor(val pluginProvider: PluginProvider) :
                 notifyPropertyChanged(BR.selectedItem)
             }
         }
-
-    init {
-        selectedItem = items[0]
-    }
 }

@@ -22,6 +22,7 @@ class OverlayView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         arrayOf(Resources.getSystem().displayMetrics.widthPixels, Resources.getSystem().displayMetrics.heightPixels)
     }
     var viewChangedCallback: ((Int, Int, Int, Int) -> Unit)? = null
+    var expandStateChangedCallback: ((Boolean) -> Unit)? = null
 
     private fun viewChanged() {
         (layoutParams as WindowManager.LayoutParams).apply {
@@ -38,6 +39,7 @@ class OverlayView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             floatingView.visibility = if (value) View.GONE else View.VISIBLE
             expandedLayout.visibility = if (value) View.VISIBLE else View.GONE
             isActivated = isExpanded
+            expandStateChangedCallback?.invoke(isExpanded)
         }
 
     private var isResizeEnabled = false

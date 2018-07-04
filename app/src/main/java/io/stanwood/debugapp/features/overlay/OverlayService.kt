@@ -15,6 +15,7 @@ import android.os.Build
 import android.provider.Settings
 import android.support.v4.app.NotificationCompat
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import dagger.android.AndroidInjection
@@ -29,6 +30,8 @@ class OverlayService : AccessibilityService() {
     lateinit var settingsRepository: SettingsRepository
     @Inject
     lateinit var overlay: Overlay
+
+    private var overlayView: View?=null
 
     private val windowManager by lazy {
         getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -69,8 +72,8 @@ class OverlayService : AccessibilityService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             return
         }
-        overlay.apply {
-            windowManager.addView(create(),
+        overlayView= overlay.create().apply {
+            windowManager.addView(this,
                     settingsRepository.getViewSize()
                             .let {
                                 WindowManager.LayoutParams(
@@ -90,8 +93,9 @@ class OverlayService : AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiver)
-        overlay.rootView?.apply {
-            windowManager.removeView(this)
+        overlayView?.apply {
+            this@OverlayService.windowManager.removeView(this)
+            overlayView=null
         }
     }
 

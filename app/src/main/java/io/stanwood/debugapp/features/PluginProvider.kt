@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class PluginProvider @Inject constructor(private val analyticsPlugin: AnalyticsPlugin,
                                          private val webRequestPlugin: WebRequestPlugin) {
-    val plugins = mapOf(
+    val plugins = sortedMapOf(
             Pair(0, PluginConfig(analyticsPlugin, "Analytics", R.drawable.ic_timeline_black_24dp, 0)),
             Pair(1, PluginConfig(webRequestPlugin, "Requests", R.drawable.ic_cloud_black_24dp, 1)))
 }

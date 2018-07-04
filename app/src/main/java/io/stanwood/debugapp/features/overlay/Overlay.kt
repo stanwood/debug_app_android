@@ -23,18 +23,27 @@ class Overlay @Inject constructor(private val context: Application,
 
     private var binding: ViewOverlayBinding? = null
 
-    val rootView = binding?.root
-
     fun create(): View =
             ViewOverlayBinding.inflate(LayoutInflater.from(context))
                     .let {
                         binding = it
                         viewModel.addOnPropertyChangedCallback(propertyChangedCallback)
                         it.overlay.viewChangedCallback = { x, y, w, h -> settingsRepository.saveViewSize(x, y, w, h) }
+                        it.overlay.expandStateChangedCallback = {
+                            if (it) {
+                                if (viewModel.selectedItem == null) {
+                                    viewModel.selectedItem = viewModel.items[0]
+                                }
+                                activePlugin = viewModel.selectedItem?.let {
+                                    pluginProvider.plugins[it.id]?.plugin
+                                }
+                            } else {
+                                activePlugin = null
+                            }
+                        }
                         it.rcvDrawer.layoutManager = LinearLayoutManager(context)
                         it.rcvDrawer.adapter = Adapter(LayoutInflater.from(context))
                         it.vm = viewModel
-                        activePlugin = pluginProvider.plugins[viewModel.selectedItem?.id]?.plugin
                         it.executePendingBindings()
                         it.root
                     }
