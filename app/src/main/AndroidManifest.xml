@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".StanwoodApp">
         <activity android:name="io.stanwood.debugapp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -17,7 +18,7 @@
         </activity>
 
         <service
-            android:name=".DebugOverlayService"
+            android:name="io.stanwood.debugapp.features.overlay.OverlayService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
             android:enabled="true"
             android:exported="false">
@@ -27,6 +28,7 @@
             </intent-filter>
 
         </service>
+
     </application>
 
 

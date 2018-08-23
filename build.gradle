@@ -1,9 +1,10 @@
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.60'
     ext.target_version = 27
     ext.min_version = 21
-    ext.support_version = '27.0.2'
-    ext.plugin_version = "3.0.1"
+    ext.support_version = '27.1.1'
+    ext.plugin_version = "3.2.0-beta05"
+    ext.dagger_version = '2.16'
     repositories {
         google()
         jcenter()
@@ -11,6 +12,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
 
     }
 }
@@ -19,6 +21,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 

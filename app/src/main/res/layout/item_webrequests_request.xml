@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="io.stanwood.debugapp.features.webrequest.WebRequestItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:divider="?android:attr/listDivider"
+        android:paddingEnd="2dp"
+        android:paddingStart="2dp"
+        android:showDividers="middle"
+        app:selected="@{vm.selected}"
+        android:background="@drawable/selector_row"
+        android:onClick="@{(v)->vm.callback.invoke(vm)}">
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:gravity="center"
+            android:text="@{vm.requestMethod}"
+            android:textSize="@dimen/small" />
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:textSize="@dimen/small"
+            android:gravity="center_horizontal"
+            android:text="@{vm.responseCode}"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:textSize="@dimen/small"
+            android:ellipsize="middle"
+            android:gravity="center_vertical"
+            android:text="@{vm.url}"/>
+    </LinearLayout>
+</layout>
