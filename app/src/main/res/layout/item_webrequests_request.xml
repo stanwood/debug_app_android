@@ -11,39 +11,45 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:divider="?android:attr/listDivider"
-        android:paddingEnd="2dp"
-        android:paddingStart="2dp"
-        android:showDividers="middle"
-        app:selected="@{vm.selected}"
         android:background="@drawable/selector_row"
-        android:onClick="@{(v)->vm.callback.invoke(vm)}">
+        android:divider="?android:attr/listDivider"
+        android:onClick="@{(v)->vm.callback.invoke(vm)}"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:showDividers="middle"
+        app:selected="@{vm.selected}">
+
         <TextView
             android:layout_width="40dp"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            android:gravity="center"
             android:text="@{vm.requestMethod}"
+            android:textColor="@color/night_rider"
             android:textSize="@dimen/small" />
+
         <TextView
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:gravity="center_horizontal"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
-            android:textSize="@dimen/small"
-            android:gravity="center_horizontal"
-            android:text="@{vm.responseCode}"/>
+            android:text="@{vm.responseCode}"
+            android:textColor="@color/night_rider"
+            android:textSize="@dimen/small" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
             android:layout_weight="1"
-            android:maxLines="2"
-            android:textSize="@dimen/small"
             android:ellipsize="middle"
             android:gravity="center_vertical"
-            android:text="@{vm.url}"/>
+            android:maxLines="2"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:text="@{vm.url}"
+            android:textColor="@color/night_rider"
+            android:textSize="@dimen/small" />
     </LinearLayout>
 </layout>
