@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:textColor="@color/night_rider"
             android:textSize="@dimen/small"
             android:text="@{vm.value}"/>
     </LinearLayout>

@@ -12,5 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@{vm.trace}"
+        android:textColor="@color/night_rider"
         android:textSize="@dimen/small" />
 </layout>

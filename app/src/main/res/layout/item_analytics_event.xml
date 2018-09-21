@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".5"
             android:paddingStart="4dp"
+            android:textColor="@color/night_rider"
             android:text="@{vm.timestamp}"
             android:textSize="@dimen/small" />
 
@@ -34,6 +35,7 @@
             android:layout_weight=".5"
             android:paddingStart="4dp"
             android:textSize="@dimen/small"
+            android:textColor="@color/night_rider"
             android:text="@{vm.event}"/>
 
     </LinearLayout>
